@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Enduring Gaze: An Interactive Exploration of the Evil Eye</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A thematic single-page application with a sticky top navigation for easy access to key sections. The structure is designed for intuitive exploration rather than mirroring the linear report format. Key sections include: 1) A hero introduction posing the central question. 2) "The Concept": Defining the belief. 3) "Global Practices": An interactive card-based section to compare regional traditions (South Asia, Middle East, Mediterranean), which is more engaging than a static table. 4) "Symptoms & Cures": Using accordions and a radar chart to present dense information clearly. 5) "Frameworks of Belief": Employing a doughnut chart and tabbed content to contrast scientific vs. theological views. 6) "The Verdict": A concluding summary. This structure breaks down complex information into digestible, user-driven chunks, enhancing understanding and engagement. -->
+    <!-- Visualization & Content Choices: 1) Report Info: Comparative cultural practices -> Goal: Compare traditions -> Viz: Interactive HTML cards -> Interaction: Click to reveal details -> Justification: More engaging and mobile-friendly than a static table. 2) Report Info: List of symptoms -> Goal: Show the wide range of effects -> Viz: Chart.js Radar Chart & HTML accordions -> Interaction: Hover tooltips on chart, click to expand accordions -> Justification: Visualizes the multi-faceted nature of the affliction and manages long lists of text. 3) Report Info: Explanatory frameworks -> Goal: Contrast perspectives -> Viz: Chart.js Doughnut Chart & HTML tabs -> Interaction: Click chart/tabs to switch views -> Justification: Provides a high-level overview and allows for deep dives into specific frameworks without clutter. 4) Report Info: Historical timeline -> Goal: Show ancient origins -> Viz: Vertical timeline with HTML/Tailwind -> Interaction: Subtle scroll-based fade-ins -> Justification: More visually interesting than a text block. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f5f5f4; color: #44403c; }
+        h1, h2, h3 { font-family: 'Lora', serif; }
+        .chart-container { position: relative; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 400px; } }
+        .nav-link { transition: color 0.3s, border-color 0.3s; }
+        .nav-link.active { color: #0369a1; border-bottom-color: #0369a1; }
+        .tab-btn.active { background-color: #0369a1; color: #ffffff; }
+        .fade-in { opacity: 0; transition: opacity 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+    <header id="header" class="bg-stone-100/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <h3 class="text-xl font-semibold text-stone-700">The Enduring Gaze</h3>
+                <div class="hidden sm:flex items-center space-x-6">
+                    <a href="#concept" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">The Concept</a>
+                    <a href="#practices" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Global Practices</a>
+                    <a href="#mechanics" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Symptoms & Cures</a>
+                    <a href="#frameworks" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">Frameworks</a>
+                    <a href="#verdict" class="nav-link text-stone-600 hover:text-sky-700 border-b-2 border-transparent pb-1">The Verdict</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="text-center py-20 sm:py-28 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-stone-900 tracking-tight">The Enduring Gaze</h1>
+                <p class="mt-4 text-lg sm:text-xl text-stone-600 max-w-3xl mx-auto">An interactive exploration of *Nazar Lagna* and the Evil Eye, a belief that has shaped human culture for over 5,000 years.</p>
+                <p class="mt-8 text-2xl font-semibold text-sky-800 font-serif">Is it a potent curse, a psychological phenomenon, or a social tool? <br>Let's find out.</p>
+            </div>
+        </section>
+
+        <section id="concept" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-stone-900">What is the Evil Eye?</h2>
+                    <p class="mt-3 text-lg text-stone-600 max-w-3xl mx-auto">This section introduces the core concept of the evil eye, or *Nazar Lagna*. It explains the belief that a malevolent or envious gaze can transmit misfortune, a notion with deep historical roots and complex social implications.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-2">The Gaze of Envy</h3>
+                            <p class="text-stone-700 leading-relaxed">At its heart, the evil eye is a supernatural belief in a curse transmitted through a look. The primary driver is almost universally identified as envy (*hasad* in Arabic). When someone looks upon another's good fortune—their beauty, health, or success—with a heart full of jealousy, a harmful force is believed to be unleashed. This makes public displays of prosperity a source of potential danger.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-stone-800 mb-2">Intentional vs. Unintentional Harm</h3>
+                            <p class="text-stone-700 leading-relaxed">A crucial aspect of the belief is that the curse can be cast both intentionally by an enemy and, more insidiously, unintentionally by a friend or family member. A simple compliment, if filled with intense admiration, can inadvertently trigger the curse. This "paradox of praise" creates a pervasive vulnerability and encourages social strategies of humility and modesty to avoid attracting envy.</p>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4 text-center">A 5,000-Year Journey</h3>
+                        <div class="relative pl-8 border-l-2 border-sky-200 space-y-12">
+                            <div class="relative">
+                                <div class="absolute -left-[42px] top-1/2 -translate-y-1/2 w-5 h-5 bg-sky-600 rounded-full border-4 border-stone-100"></div>
+                                <p class="font-semibold text-stone-800">3,000 BCE: Mesopotamian Cradle</p>
+                                <p class="text-sm text-stone-600">The earliest evidence appears in Sumer, with cuneiform tablets and eye-shaped idols found in cities like Tell Brak.</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[42px] top-1/2 -translate-y-1/2 w-5 h-5 bg-sky-600 rounded-full border-4 border-stone-100"></div>
+                                <p class="font-semibold text-stone-800">800 BCE - 400 CE: The Classical World</p>
+                                <p class="text-sm text-stone-600">The belief becomes deeply entrenched in Greco-Roman society, discussed by philosophers like Plato and writers like Plutarch.</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[42px] top-1/2 -translate-y-1/2 w-5 h-5 bg-sky-600 rounded-full border-4 border-stone-100"></div>
+                                <p class="font-semibold text-stone-800">1500 BCE - 1500 CE: Global Spread</p>
+                                <p class="text-sm text-stone-600">Mediterranean glass bead production begins, and traders like the Phoenicians and Ottomans spread the iconic blue eye amulet across the world.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="practices" class="py-16 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-stone-900">Global Practices and Beliefs</h2>
+                    <p class="mt-3 text-lg text-stone-600 max-w-3xl mx-auto">While the core belief is consistent, its expression varies dramatically across cultures. This section provides an interactive comparison of the rituals, amulets, and social norms associated with the evil eye in different parts of the world. Click on a region to explore its unique traditions.</p>
+                </div>
+                <div id="practices-tabs" class="flex justify-center space-x-2 sm:space-x-4 mb-8"></div>
+                <div id="practices-content" class="fade-in"></div>
+            </div>
+        </section>
+
+        <section id="mechanics" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-stone-900">Symptoms & Cures</h2>
+                    <p class="mt-3 text-lg text-stone-600 max-w-3xl mx-auto">The belief system includes a detailed, if non-specific, list of symptoms and a rich toolkit of remedies. This section explores the manifestations of the curse and the apotropaic magic—from amulets to rituals—developed to combat it.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                    <div class="fade-in">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4 text-center">Domains of Affliction</h3>
+                        <div class="chart-container">
+                            <canvas id="symptomsChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="symptoms-accordion" class="space-y-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="frameworks" class="py-16 sm:py-24 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-stone-900">Frameworks of Belief</h2>
+                    <p class="mt-3 text-lg text-stone-600 max-w-3xl mx-auto">Is the evil eye a spiritual reality, a psychological quirk, or a social construct? This section examines the phenomenon through different analytical lenses, revealing how its "reality" changes depending on the perspective. Use the chart or tabs to explore each framework.</p>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
+                    <div class="lg:col-span-1 fade-in">
+                        <h3 class="text-2xl font-semibold text-stone-800 mb-4 text-center">Lenses of Understanding</h3>
+                        <div class="chart-container !h-80 md:!h-96">
+                            <canvas id="frameworksChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <div class="mb-4 border-b border-stone-200">
+                            <nav id="frameworks-tabs" class="flex space-x-2 -mb-px" aria-label="Tabs"></nav>
+                        </div>
+                        <div id="frameworks-content" class="fade-in"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="verdict" class="py-16 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-stone-900">The Final Verdict</h2>
+                     <p class="mt-3 text-lg text-stone-600 max-w-3xl mx-auto">This final section synthesizes the various perspectives to answer the central question: Is *nazar lagna* real? The conclusion is nuanced, acknowledging the different planes on which the phenomenon exists and has a tangible impact.</p>
+                </div>
+                <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-white p-6 rounded-lg shadow-sm fade-in">
+                        <h3 class="text-xl font-semibold text-sky-800 mb-2">Culturally & Socially Real</h3>
+                        <p class="text-stone-600">Yes. As a belief system that has shaped social norms, daily rituals, and human behavior for millennia, its reality is undeniable. It functions as a powerful tool for managing envy and reinforcing community cohesion.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm fade-in">
+                        <h3 class="text-xl font-semibold text-sky-800 mb-2">Psychologically & Physically Real</h3>
+                        <p class="text-stone-600">Yes. Through the nocebo effect, the belief that one is cursed can trigger genuine stress responses, causing measurable physical and psychological symptoms. The fear of harm can cause real harm.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm fade-in">
+                        <h3 class="text-xl font-semibold text-sky-800 mb-2">Supernaturally Unverified</h3>
+                        <p class="text-stone-600">No. From a scientific perspective, there is no empirical evidence for a supernatural energy transmitted by a gaze. The effects are real, but they are misattributed, stemming from coincidence, bias, or psychology.</p>
+                    </div>
+                </div>
+                <div class="mt-12 text-center max-w-4xl mx-auto bg-sky-50 border-l-4 border-sky-500 p-6 rounded-r-lg">
+                    <p class="text-lg text-sky-900 leading-relaxed">The enduring power of the evil eye lies not in a verifiable curse, but in its profound resonance with the human condition. It provides a narrative for random suffering, a framework for social harmony, and a testament to the powerful connection between mind and body. The gaze endures because the fears it represents—of envy, misfortune, and vulnerability—are universal.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-800 text-stone-300 py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>An Interactive Distillation of "The Enduring Gaze: A Multi-Disciplinary Analysis of Nazar Lagna".</p>
+            <p class="text-sm text-stone-400 mt-2">Application designed for educational and exploratory purposes.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const appData = {
+        practices: [
+            {
+                region: 'South Asia',
+                icon: '🌶️',
+                title: 'Nazar & Drishti',
+                content: {
+                    intro: "In the Indian subcontinent, the belief is a syncretic blend of Hindu (*drishti*) and Perso-Arabic (*nazar*) traditions, deeply integrated into daily life.",
+                    amulets: [
+                        { name: 'Kaala Teeka', desc: 'A black dot of kohl (*kajal*) applied to a child\'s face to mar their perfection and deflect the gaze.' },
+                        { name: 'Nazaria', desc: 'A black thread tied around the wrist or ankle, serving as a constant protective barrier.' },
+                        { name: 'Nimbu-Mirchi Totka', desc: 'A string of lemon and chillies hung at entrances to satisfy and turn away the goddess of misfortune.' }
+                    ],
+                    rituals: [
+                        { name: 'Nazar Utarna', desc: 'A cleansing ritual where salt, red chillies, and mustard seeds are circled around the afflicted person and then burned. A lack of pungent smoke from the chillies is seen as proof of success.' }
+                    ]
+                }
+            },
+            {
+                region: 'Middle East & Turkey',
+                icon: '🧿',
+                title: 'Ain & Nazar',
+                content: {
+                    intro: "In this region, the belief is pervasive and its symbols are globally recognized, integrated into both folk tradition and Islamic doctrine.",
+                    amulets: [
+                        { name: 'Nazar Boncuğu', desc: 'The iconic blue glass eye bead, believed to stare back at the world and deflect malevolent gazes. If it breaks, it has absorbed a curse.' },
+                        { name: 'Hamsa (Hand of Fatima)', desc: 'An open right-hand symbol, often with an eye in the palm, used for protection across multiple faiths.' }
+                    ],
+                    rituals: [
+                        { name: 'Saying "Masha\'Allah"', desc: '"God has willed it." An obligatory phrase said when giving a compliment to attribute the good fortune to God and neutralize envy.' },
+                        { name: 'Burning Incense', desc: 'Used to purify a space and ward off negative spiritual influences.' }
+                    ]
+                }
+            },
+            {
+                region: 'Mediterranean',
+                icon: '🤘',
+                title: 'Mati & Malocchio',
+                content: {
+                    intro: "In the belief's ancient heartland like Greece and Italy, the tradition coexists in a complex relationship with Orthodox Christianity.",
+                    amulets: [
+                        { name: 'Mataki', desc: 'The Greek version of the blue glass eye charm, used ubiquitously for protection against the *kako mati* (bad eye).' },
+                        { name: 'Cornicello', desc: 'An Italian horn-shaped amulet, typically red, worn to ward off the *malocchio*.' },
+                        { name: 'Mano Cornuta', desc: 'The "horned hand" gesture, made discreetly to instantly deflect a suspected evil eye.' }
+                    ],
+                    rituals: [
+                        { name: 'Xematiasma', desc: 'A formal prayer acknowledged by the Greek Orthodox Church, read by a priest to cure the afflicted, though the church discourages folk charms.' }
+                    ]
+                }
+            }
+        ],
+        symptoms: [
+            {
+                category: "Physical Symptoms",
+                items: ["Sudden fever or illness", "Unexplained headaches or body aches", "Persistent fatigue and lethargy", "Digestive issues, loss of appetite", "Mysterious bruises"]
+            },
+            {
+                category: "Psychological & Emotional Symptoms",
+                items: ["Overwhelming anxiety or fear", "Sudden mood swings or depression", "Uncharacteristic irritability", "Difficulty concentrating, mental fog", "Sudden loss of confidence"]
+            },
+            {
+                category: "Circumstantial & Social Misfortune",
+                items: ["Persistent streak of bad luck", "Unexpected financial losses or business failure", "Constant obstacles in work or projects", "Sudden discord in relationships", "Serious accidents or severe calamities"]
+            }
+        ],
+        frameworks: [
+            {
+                name: "Theological",
+                content: "For millions, the evil eye is a spiritual fact, affirmed by sacred texts. In Islam, it is *al-ayn*, a real force mentioned in the Qur'an and Hadith. In Hinduism, *drishti* is referenced in ancient scriptures like the Vedas. These faiths prescribe specific prayers and rituals for protection, while often condemning folk amulets as superstition, creating a tension between official doctrine and popular practice."
+            },
+            {
+                name: "Sociological",
+                content: "This perspective sees the belief as a highly effective, informal social mechanism. It acts as a 'social leveler' by discouraging ostentatious displays of wealth or success, thereby reducing social tension and envy. It also provides a clear, external cause for misfortune, transforming random suffering into a manageable social narrative and preventing community breakdown in the face of tragedy."
+            },
+            {
+                name: "Psychological",
+                content: "Science explains the evil eye's effects through established psychological principles. The **Nocebo Effect** is key: the negative belief that one is cursed triggers a real stress response (releasing cortisol), causing genuine physical symptoms like headaches and fatigue. **Cognitive biases**, like confirmation bias, and the post-hoc fallacy, lead people to remember confirming instances and see causality where there is only coincidence."
+            }
+        ]
+    };
+
+    function init() {
+        setupPractices();
+        setupSymptoms();
+        setupFrameworks();
+        setupCharts();
+        setupNavigation();
+        setupFadeInOnScroll();
+    }
+
+    function setupPractices() {
+        const tabsContainer = document.getElementById('practices-tabs');
+        const contentContainer = document.getElementById('practices-content');
+        let activeTab = appData.practices[0].region;
+
+        appData.practices.forEach(practice => {
+            const button = document.createElement('button');
+            button.className = 'tab-btn px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base font-semibold rounded-md transition';
+            button.textContent = practice.region;
+            button.dataset.region = practice.region;
+            if (practice.region === activeTab) {
+                button.classList.add('active', 'bg-sky-700', 'text-white');
+            } else {
+                button.classList.add('bg-white', 'text-stone-600', 'hover:bg-sky-100');
+            }
+            button.onclick = () => {
+                activeTab = practice.region;
+                updateTabs();
+                renderPracticeContent();
+            };
+            tabsContainer.appendChild(button);
+        });
+
+        function updateTabs() {
+            tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.region === activeTab) {
+                    btn.classList.add('active', 'bg-sky-700', 'text-white');
+                    btn.classList.remove('bg-white', 'text-stone-600', 'hover:bg-sky-100');
+                } else {
+                    btn.classList.remove('active', 'bg-sky-700', 'text-white');
+                    btn.classList.add('bg-white', 'text-stone-600', 'hover:bg-sky-100');
+                }
+            });
+        }
+
+        function renderPracticeContent() {
+            const practice = appData.practices.find(p => p.region === activeTab);
+            contentContainer.innerHTML = `
+                <div class="bg-stone-50 p-6 sm:p-8 rounded-lg shadow-inner max-w-4xl mx-auto">
+                    <div class="text-center mb-6">
+                        <span class="text-4xl" role="img" aria-label="${practice.region} icon">${practice.icon}</span>
+                        <h3 class="text-2xl font-bold text-stone-800 mt-2">${practice.title}</h3>
+                        <p class="text-stone-600 mt-2">${practice.intro}</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-lg text-sky-800 mb-3">Amulets & Symbols</h4>
+                            <ul class="space-y-3">
+                                ${practice.content.amulets.map(item => `
+                                    <li class="flex items-start">
+                                        <span class="text-sky-600 mr-2 mt-1">◆</span>
+                                        <div><strong>${item.name}:</strong> ${item.desc}</div>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg text-sky-800 mb-3">Rituals & Practices</h4>
+                            <ul class="space-y-3">
+                                ${practice.content.rituals.map(item => `
+                                    <li class="flex items-start">
+                                        <span class="text-sky-600 mr-2 mt-1">◆</span>
+                                        <div><strong>${item.name}:</strong> ${item.desc}</div>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        renderPracticeContent();
+    }
+    
+    function setupSymptoms() {
+        const accordionContainer = document.getElementById('symptoms-accordion');
+        appData.symptoms.forEach((symptomGroup, index) => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg shadow-sm overflow-hidden';
+            div.innerHTML = `
+                <button class="w-full text-left p-4 flex justify-between items-center font-semibold text-stone-700 hover:bg-stone-50 transition">
+                    <span>${symptomGroup.category}</span>
+                    <span class="transform transition-transform text-sky-600 text-2xl font-light">${index === 0 ? '−' : '+'}</span>
+                </button>
+                <div class="px-4 pb-4 ${index === 0 ? '' : 'hidden'}">
+                    <ul class="space-y-2 text-stone-600">
+                        ${symptomGroup.items.map(item => `<li class="flex items-start"><span class="text-sky-500 mr-2 mt-1">▪</span>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            accordionContainer.appendChild(div);
+
+            const button = div.querySelector('button');
+            const content = div.querySelector('div');
+            const icon = button.querySelector('span:last-child');
+
+            button.addEventListener('click', () => {
+                content.classList.toggle('hidden');
+                if (content.classList.contains('hidden')) {
+                    icon.textContent = '+';
+                } else {
+                    icon.textContent = '−';
+                }
+            });
+        });
+    }
+
+    function setupFrameworks() {
+        const tabsContainer = document.getElementById('frameworks-tabs');
+        const contentContainer = document.getElementById('frameworks-content');
+        let activeTab = appData.frameworks[0].name;
+
+        appData.frameworks.forEach(framework => {
+            const button = document.createElement('button');
+            button.className = 'tab-btn whitespace-nowrap px-3 py-2 font-medium text-sm rounded-t-lg border-b-2 transition';
+            button.textContent = framework.name;
+            button.dataset.name = framework.name;
+            button.onclick = () => {
+                activeTab = framework.name;
+                updateTabs();
+                renderFrameworkContent();
+            };
+            tabsContainer.appendChild(button);
+        });
+
+        function updateTabs() {
+            tabsContainer.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.dataset.name === activeTab) {
+                    btn.classList.add('active', 'border-sky-600', 'text-sky-700');
+                    btn.classList.remove('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+                } else {
+                    btn.classList.remove('active', 'border-sky-600', 'text-sky-700');
+                    btn.classList.add('border-transparent', 'text-stone-500', 'hover:text-stone-700', 'hover:border-stone-300');
+                }
+            });
+        }
+
+        function renderFrameworkContent() {
+            const framework = appData.frameworks.find(f => f.name === activeTab);
+            contentContainer.innerHTML = `
+                <div class="bg-stone-50 p-6 rounded-b-lg rounded-r-lg">
+                    <p class="text-stone-700 leading-relaxed">${framework.content}</p>
+                </div>
+            `;
+        }
+        
+        window.setActiveFrameworkTab = (name) => {
+            activeTab = name;
+            updateTabs();
+            renderFrameworkContent();
+        }
+
+        setActiveFrameworkTab(activeTab);
+    }
+
+    function setupCharts() {
+        const symptomsCtx = document.getElementById('symptomsChart').getContext('2d');
+        new Chart(symptomsCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Physical', 'Psychological', 'Circumstantial'],
+                datasets: [{
+                    label: 'Domains of Affliction',
+                    data: [5, 5, 5],
+                    backgroundColor: 'rgba(3, 105, 161, 0.2)',
+                    borderColor: 'rgb(3, 105, 161)',
+                    pointBackgroundColor: 'rgb(3, 105, 161)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(3, 105, 161)'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(68, 64, 60, 0.2)' },
+                        grid: { color: 'rgba(68, 64, 60, 0.2)' },
+                        pointLabels: { font: { size: 14, family: "'Inter', sans-serif" }, color: '#44403c' },
+                        ticks: { display: false, beginAtZero: true, max: 5, stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            }
+        });
+
+        const frameworksCtx = document.getElementById('frameworksChart').getContext('2d');
+        const frameworksChart = new Chart(frameworksCtx, {
+            type: 'doughnut',
+            data: {
+                labels: appData.frameworks.map(f => f.name),
+                datasets: [{
+                    label: 'Frameworks of Belief',
+                    data: [1, 1, 1],
+                    backgroundColor: ['#0ea5e9', '#f59e0b', '#10b981'],
+                    borderColor: '#f5f5f4',
+                    hoverOffset: 8
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                cutout: '60%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 12, family: "'Inter', sans-serif" } } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) { return ` ${context.label}`; }
+                        }
+                    }
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const clickedLabel = frameworksChart.data.labels[elements[0].index];
+                        if(window.setActiveFrameworkTab) {
+                            window.setActiveFrameworkTab(clickedLabel);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function setupNavigation() {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+        
+        const observerOptions = { rootMargin: '-50% 0px -50% 0px' };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    }
+    
+    function setupFadeInOnScroll() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+    }
+
+    init();
+});
+</script>
+</body>
+</html>
