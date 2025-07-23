@@ -72,7 +72,7 @@ open index.html
 
 ## 📜 **License**
 
-This project is released under the **MIT License**.  
+This project is released under the **The Unlicense**.  
 See the [LICENSE](LICENSE) file for details.
 
 ---
