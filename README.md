@@ -1,6 +1,6 @@
 # 👁️ **The Enduring Gaze**  
 ### *An Interactive Exploration of the Evil Eye*  
-[![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Visit_Now-0ea5e9?style=for-the-badge)](https://theenduringgaze.netlify.app/)  
+[![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Visit_Now-0ea5e9?style=for-the-badge)](https://rambo1111.github.io/The-Enduring-Gaze/)  
 
 ---
 
@@ -35,7 +35,7 @@ This project takes you on a cultural, psychological, and theological exploration
 | **JavaScript (ES6+)** | Interactivity (tabs, accordions, animations). |
 | **Chart.js**     | Interactive data visualizations.     |
 | **Google Fonts** | Beautiful typography with `Lora` & `Inter`. |
-| **Netlify**      | Hosting & continuous deployment.     |
+| **GitHub Pages**      | Hosting & continuous deployment.     |
 
 ---
 
